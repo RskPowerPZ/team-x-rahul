@@ -64,7 +64,7 @@ async def send_request(encrypted_uid, token, url):
             'Expect': "100-continue",
             'X-Unity-Version': "2018.4.11f1",
             'X-GA': "v1 1",
-            'ReleaseVersion': "OB48"
+            'ReleaseVersion': "OB49"
         }
         async with aiohttp.ClientSession() as session:
             async with session.post(url, data=edata, headers=headers) as response:
@@ -161,8 +161,9 @@ def decode_protobuf(binary):
         app.logger.error(f"Unexpected error during protobuf decoding: {e}")
         return None
 
-@app.route('/like', methods=['GET'])
-def handle_requests():
+@app.route('/')
+def home():
+    return jsonify({"message": "API is running. Use /like with uid and server_name parameters."})
     uid = request.args.get("uid")
     server_name = request.args.get("server_name", "").upper()
     if not uid or not server_name:
